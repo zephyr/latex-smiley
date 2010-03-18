@@ -19,6 +19,8 @@ This will give you the documentation as well as the style file.
 
 ## Implementation
 
+This package has not yet reachead a stable status, so the user intferface may change.
+
 ### ToDo’s
 
 * Resolve kerning problem.
@@ -27,7 +29,7 @@ This will give you the documentation as well as the style file.
 
 ### Smileys
 
-Most of the shorthands were taken from [The Canonical Smiley (and 1-Line Symbol) List by James Marshall]](http://marshall.freeshell.org/smileys.html), which is much bigger as the [list of emoticons at Wikipedia](http://en.wikipedia.org/wiki/List_of_emoticons).
+Most of the shorthands were taken from [The Canonical Smiley (and 1-Line Symbol) List by James Marshall](http://marshall.freeshell.org/smileys.html), which is much bigger as the [list of emoticons at Wikipedia](http://en.wikipedia.org/wiki/List_of_emoticons).
 
 
 ## Licence

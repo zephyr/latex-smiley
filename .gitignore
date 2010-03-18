@@ -4,9 +4,14 @@
 *.aux
 *.bbl
 *.blg
+*.idx
 *.log
 *.out
+*.sty
 *.toc
 
 # Ignore this final documents (but grasp PDF images):
-mindmap.pdf
+smiley.pdf
+
+# Ignore sink folder:
+sink/
