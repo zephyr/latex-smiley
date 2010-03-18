@@ -1,0 +1,12 @@
+# Manual: http://www.kernel.org/pub/software/scm/git/docs/gitignore.html
+
+# Ignore temp files created by LaTeX:
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+
+# Ignore this final documents (but grasp PDF images):
+mindmap.pdf
