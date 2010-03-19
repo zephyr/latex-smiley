@@ -23,6 +23,7 @@ Do not distribute a modified version of this file under the same name.
 \endpostamble
 \keepsilent
 \generate{\file{smiley.sty}{\from{smiley.dtx}{package}}}
+\generate{\file{smiley-demo.tex}{\from{smiley.dtx}{sample}}}
 
 \ifx\fmtname\nameofplainTeX
   \expandafter\endbatchfile
@@ -226,6 +227,43 @@ This is the documentation of the package |smiley|.
 \definesmiley{wink}{;-)}
 
 % \end{macrocode}
-% </package>
+% \iffalse
+%</package>
+% \fi
+% \iffalse
+%<*sample>
+\documentclass{article}
+\usepackage{xltxtra}
+\setmainfont{Comic Jens}
+\usepackage{pgffor}
+\usepackage{smiley} % [usecolor, color=green, inactive]
+
+\begin{document}
+\title{A short sample document for the \texttt{smiley} package}
+\author{Dennis Heidsiek}
+\maketitle
+Some common emoticons: \smiley{happy} and \smiley{:(} and \smiley{>:-|>} and \smiley{rose} and \smiley{santa} and \smiley{yet unknown!} end of line \smiley{wink}.
+
+Kerning problem: Geh\smiley{:o)}ft Geh\fbox{\smiley{:o)}}ft \smiley{sad} Geh\smiley{:o)}\kern-0.75emft!
+
+\smileysetup{usebold=true, useitalic, usecolor, angle=-45}
+\smiley{evil} Qua'pla! \smiley{klingon} bath'let
+
+\smileysetup{color=blue, angle=-80}
+\smiley{cylon} Bye your command! \smiley{cylon} \smiley{wink}
+
+Unicode glyphs gives us much more fun: ſ-ſmiley \smiley{:-ſ} and em-dash-smiley: \smiley{:—)} vs.\ \smiley{:-)}
+
+Custom shortcuts: \newcommand{\sniffy}{\smiley{irony}} \sniffy
+
+Redefining of Smileys: \smiley{irony} \definesmiley{irony}{;)} \smiley{irony}
+
+Sniffy²: \sniffy
+
+\foreach \angle in {0, 2.5, 5, ..., 360} {\smileysetup{angle=\angle}\smiley{happy}}
+
+\end{document}
+%</sample>
+% \fi
 % \Finale
 % \endinput

@@ -56,3 +56,5 @@ and the derived files
 
 * smiley.sty
 * smiley.pdf
+* smiley-demo.tex
+* smiley-demo.pdf

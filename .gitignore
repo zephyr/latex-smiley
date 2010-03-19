@@ -8,11 +8,12 @@
 *.idx
 *.log
 *.out
-*.sty
 *.toc
 
-# Ignore this final documents (but grasp PDF images):
+# Ignore all final documents (but grasp PDF images):
+*.sty
 smiley.pdf
+smiley-demo.pdf
 
 # Ignore sink folder:
 sink/
