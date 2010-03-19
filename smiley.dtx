@@ -1,0 +1,213 @@
+% \iffalse
+%% File: smiley.dtx by Dennis Heidsiek, mail: HeidsiekB at aol dot com
+%%
+%% You can get the latest version at http://github.com/zephyr/latex-smiley
+%%
+%<*driver>
+\def\nameofplainTeX{plain}
+\ifx\fmtname\nameofplainTeX\else
+  \expandafter\begingroup
+\fi
+\input docstrip.tex
+\askforoverwritefalse
+\preamble
+
+THIS IS A AUTOMATICALLY GENERATED FILE CONTAINING EXPERIMENTAL CODE.
+
+Do not distribute this file without also distributing the source files specified above.
+
+Do not distribute a modified version of this file under the same name.
+
+\endpreamble
+\postamble
+\endpostamble
+\keepsilent
+\generate{\file{smiley.sty}{\from{smiley.dtx}{package}}}
+
+\ifx\fmtname\nameofplainTeX
+  \expandafter\endbatchfile
+\else
+  \expandafter\endgroup
+\fi
+
+\documentclass{gmdocc}
+\usepackage{
+  xltxtra,
+  hyperref,
+  polyglossia,
+  smiley
+}
+%\usepackage[draft,index,marginclue]{fixme}
+\hypersetup{
+  pdfborder= 0 0 0,
+  colorlinks=true,
+  linkcolor=blue
+}
+\setmainlanguage{english}
+%\setmainfont{Comic Jens} % This is a sportive package, so let’s have some fun ;)
+
+\title{|smiley| \smiley{wink}}
+\newcommand{\email}[1]{\href{mailto:#1}{#1}} % Why is this not in hyperref?
+\newcommand{\githubuser}[4]{#1 \textsc{#2}\footnote{Follow or fork #1 at GitHub: \url{http://github.com/#3}}\\\email{#4}}
+\author{%
+\githubuser{Dennis}{Heidsiek}{zephir}{HeidsiekB@aol.com}\and
+\githubuser{Arno}{Trautmann}{alt}{arno.trautmann@gmx.de}}
+
+\def\marginpartt{\scriptsize\ttfamily}  % needed fix for XeTeX because of problems with the lmodern font.
+
+\begin{document}
+\maketitle
+\begin{abstract}
+This is the documentation of the package |smiley|.
+\end{abstract}
+
+\tableofcontents
+
+\section{Commands for the user}
+…
+
+\section{Implementation}
+\DocInput{smiley.dtx}
+\end{document}
+%</driver>
+%
+%<*package>
+% \fi
+% Let us dive into the implementation:
+% \begin{macrocode}
+
+%\subsection{Requirements}
+\NeedsTeXFormat{LaTeX2e}
+% For parsing |key=value| input:
+\RequirePackage{pgfkeys}
+\RequirePackage{pgfopts}
+% For colors:
+\RequirePackage{xcolor}
+% For rotations:
+\RequirePackage{graphicx} 
+
+%\subsection{Version}
+\ProvidesPackage{smiley}
+  [2010/03/16 v0.1 provides smileys, initial experimental version.]
+
+%\subsection{Data structures}
+% Define boolean macros for the state:
+\newif\ifsmiley@useitalic
+\newif\ifsmiley@usebold
+\newif\ifsmiley@useangle
+\newif\ifsmiley@usecolour
+% Explain how the |key=value| input should be processed and stored into the tree:
+\pgfkeys{
+  /smiley/.cd,
+  useitalic/.is if = smiley@useitalic,
+  usebold/.is if = smiley@usebold,
+  useangle/.is if = smiley@useangle,
+  usecolor/.is if = smiley@usecolour,
+  usecolour/.is if = smiley@usecolour,
+  angle/.store in = \smiley@angle,
+  colour/.store in = \smiley@colour,
+  color/.style = {colour=#1},
+  inactive/.code = {%
+    \let\smiley\emph
+    \PackageInfo{smiley}
+    {Package inactive}%
+  }
+}
+\AtBeginDocument{
+  \pgfkeys{
+    /smiley/inactive/.code = {%
+      \PackageInfo{smiley}{%
+      The Option ‘inactive’ is only available in preamble!
+      }%
+    }
+  }
+}
+
+%\subsection{Package defaults}
+\pgfkeys{
+  /smiley/.cd,
+  useitalic = false,
+  usebold = false,
+  useangle = true,
+  usecolour = false,
+  color = red,
+  angle = -90
+}
+
+%\subsection{User interface for changing values}
+% Parsing |key=value| input:
+\newcommand*{\smileysetup}{%
+  \pgfqkeys{/smiley}%
+}
+% Even if given as package option:
+\ProcessPgfOptions{/smiley}
+% Provides the ability to declare shortcuts for new smileys:
+\newcommand*\definesmiley[2]{%
+  \expandafter\def\csname smiley@name@#1\endcsname{#2}
+}
+
+%\subsection{Commands to format something}
+\newcommand*{\smiley@emph@apply}{%
+  \ifsmiley@useitalic
+    \expandafter\emph
+  \else
+    \expandafter\@firstofone
+  \fi
+}
+\newcommand*{\smiley@bold@apply}{%
+  \ifsmiley@usebold
+    \expandafter\textbf
+  \else
+    \expandafter\@firstofone
+  \fi
+}
+\newcommand*{\smiley@angle@apply}[1]{%
+  \ifsmiley@useangle
+    \rotatebox[origin=c]{\smiley@angle}{#1}
+  \else
+    #1
+  \fi
+}
+\newcommand*{\smiley@colour@apply}{%
+  \ifsmiley@usecolour
+    \expandafter\textcolor
+  \else
+    \expandafter\@secondoftwo
+  \fi
+  {\smiley@colour}%
+}
+% Applies all formatting to a given text:
+\newcommand*{\smiley@apply}[1]{%
+  \smiley@angle@apply{\smiley@emph@apply{\smiley@bold@apply{\smiley@colour@apply{%
+    #1%
+  }}}}%
+}
+
+%\subsection{The main command}
+%Decides which text should be formatted:
+\newcommand*{\smiley}[1]{%
+  \expandafter\smiley@apply
+    \ifcsname smiley@name@#1\endcsname
+      {\csname smiley@name@#1\endcsname}
+    \else
+      {#1}
+    \fi
+}
+
+%\subsection{List of predefined smileys}
+% In alphabetical order:
+\definesmiley{alternative}{:)}
+\definesmiley{cylon}{!-|}
+\definesmiley{happy}{:-)}
+\definesmiley{irony}{;-)}
+\definesmiley{klingon}{>:-l}
+\definesmiley{normal}{:-)}
+\definesmiley{rose}{@\}-;-'---}
+\definesmiley{sad}{:-(}
+\definesmiley{santa}{*<:-)}
+\definesmiley{smile}{:-)}
+\definesmiley{wink}{;-)}
+
+% \end{macrocode}
+% \Finale
+% \endinput
