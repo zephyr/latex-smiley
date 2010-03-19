@@ -32,11 +32,14 @@ Do not distribute a modified version of this file under the same name.
 \fi
 
 \documentclass{gmdocc}
+\def\marginpartt{\scriptsize\ttfamily}  % needed fix for XeTeX because of problems with the lmodern font.
+\GetFileInfo{smiley.sty}
+
 \usepackage{
   xltxtra,
-  hyperref,
   polyglossia,
-  smiley
+  smiley,
+  hyperref
 }
 \hypersetup{
   pdfborder= 0 0 0,
@@ -46,19 +49,18 @@ Do not distribute a modified version of this file under the same name.
 \setmainlanguage{english}
 %\setmainfont{Comic Jens} % This is a sportive package, so let’s have some fun ;)
 
-\title{|smiley| \smiley{wink}}
 \newcommand{\email}[1]{\href{mailto:#1}{#1}} % Why is this not in hyperref?
 \newcommand{\githubuser}[4]{#1 \textsc{#2}\footnote{Follow or fork #1 at GitHub: \url{http://github.com/#3}}\\\email{#4}}
+
+\title{The |smiley| package\footnote{\filenote}~\smiley{wink}}
 \author{%
 \githubuser{Dennis}{Heidsiek}{zephir}{HeidsiekB@aol.com}\and
 \githubuser{Arno}{Trautmann}{alt}{arno.trautmann@gmx.de}}
 
-\def\marginpartt{\scriptsize\ttfamily}  % needed fix for XeTeX because of problems with the lmodern font.
-
 \begin{document}
 \maketitle
 \begin{abstract}
-This is the documentation of the package |smiley|.
+This is the documentation of the \LaTeXe\ package |smiley|. It provides a single command to typeset emoticons\footnote{\url{http://en.wikipedia.org/wiki/Emoticon}}: |\smiley{:-)}| how |\smiley{happy}| will output \smiley{:)}. The style can be changed at any times using a |key=value| interface, that means after |\smileysetup{usebold, usecolor, color=violet, angle=-45}|, the command |\smiley{irony}| yields \smileysetup{usebold, usecolor, color=violet, angle=-45}\smiley{irony}. If you find any incompatiblities with any package, please send me a e-mail and maybe I can take care of it.
 \end{abstract}
 
 \tableofcontents
